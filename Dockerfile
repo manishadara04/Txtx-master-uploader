@@ -23,8 +23,8 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . .
 
-# Install Python dependencies listed in the Installer file
-RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir --upgrade --requirement Installer
+# Install Python dependencies listed in the requirements.txt file
+RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir --upgrade --requirements.txt
 
 # Specify the command to run your application
-CMD ["$VIRTUAL_ENV/bin/python", "modules/main.py"]
+CMD ["$VIRTUAL_ENV/bin/python", "main.py"]
