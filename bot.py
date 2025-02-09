@@ -25,14 +25,14 @@ from aio_get_video_info import get_video_attributes, get_video_thumb, to_mkv
 from splitter import splitVideoSize
 
 
-API_ID = os.environ.get("API_ID")
-API_HASH = os.environ.get("API_HASH")
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
+API_ID = os.environ.get("API_ID", 27536109)
+API_HASH = os.environ.get("API_HASH", "b84d7d4dfa33904d36b85e1ead16bd63")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 CLIENT_BOT = os.environ.get("CLIENT_BOT")
 DB_URL = os.environ.get("DB_URL")
 DEBUG = os.environ.get("DEBUG", True) != "false"
-DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL"))
-INTERACTION_CHANNEL = int(os.environ.get("INTERACTION_CHANNEL"))
+DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL", -1002296948181))
+INTERACTION_CHANNEL = int(os.environ.get("INTERACTION_CHANNEL", -1002337907570))
 DL_NUM = int(os.environ.get("DL_NUM"))
 thumb = os.environ.get("THUMB")
 
