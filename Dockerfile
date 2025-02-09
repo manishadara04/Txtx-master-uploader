@@ -1,30 +1,22 @@
-# Use the base image with Python 3.12 if available
-FROM python:3.12-slim
+#FROM python:3.9.7-slim-buster
+FROM python:3.10.8-slim-buster
 
-# Set environment variables
-ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install build dependencies and ffmpeg
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libc-dev \
-    libffi-dev \
-    musl-dev \
-    ffmpeg \
+RUN apt-get update -y && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends gcc libffi-dev musl-dev ffmpeg aria2 python3-pip \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a virtual environment
-RUN python3.12 -m venv $VIRTUAL_ENV
+COPY . /app/
+WORKDIR /app/
+RUN pip3 install --no-cache-dir --upgrade -r Installer
 
-# Set the working directory in the container
-WORKDIR /app
+RUN pip3 install pytube
 
-# Copy the current directory contents into the container at /app
-COPY . .
+RUN pip3 install yt-dlp
 
-# Install Python dependencies listed in the requirements.txt file
-RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir --upgrade --requirements.txt
+RUN pip3 install cloudscraper
 
-# Specify the command to run your application
-CMD ["$VIRTUAL_ENV/bin/python", "main.py"]
+ENV COOKIES_FILE_PATH="/app/youtube_cookies.txt"
+
+#CMD ["python3", "modules/main.py"]
+CMD gunicorn app:app & python3 main.py
